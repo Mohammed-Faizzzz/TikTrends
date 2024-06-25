@@ -8,6 +8,7 @@ from tensorflow.keras.layers import Dense, LeakyReLU
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.callbacks import EarlyStopping
+import joblib
 
 # Load dataset
 df = pd.read_csv('synthetic_tiktok_data.csv')
@@ -36,6 +37,11 @@ scaler_y = StandardScaler()
 X = scaler_X.fit_transform(X)
 y = scaler_y.fit_transform(y.values.reshape(-1, 1)).flatten()
 
+# Save the preprocessor and scalers
+joblib.dump(preprocessor, 'preprocessor.pkl')
+joblib.dump(scaler_X, 'scaler_X.pkl')
+joblib.dump(scaler_y, 'scaler_y.pkl')
+
 # Split data into training and test sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
@@ -55,7 +61,7 @@ model.compile(optimizer=Adam(learning_rate=0.001), loss='mean_squared_error')
 early_stopping = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
 
 # Train the model with early stopping
-model.fit(X_train, y_train, epochs=100, batch_size=10, verbose=1, validation_split=0.2, callbacks=[early_stopping])
+model.fit(X_train, y_train, epochs=50, batch_size=10, verbose=1, validation_split=0.2, callbacks=[early_stopping])
 
 # Evaluate the model on the test set
 y_pred = model.predict(X_test)
@@ -63,3 +69,6 @@ mse = np.mean((scaler_y.inverse_transform(y_pred).flatten() - scaler_y.inverse_t
 print(f'Mean Squared Error: {mse}')
 baseline_mse = np.mean((scaler_y.inverse_transform(y_test.reshape(-1, 1)).flatten() - np.mean(scaler_y.inverse_transform(y_train.reshape(-1, 1)).flatten()))**2)
 print(f'Baseline MSE: {baseline_mse}')
+
+# Save the trained model
+model.save('trained_model.h5')
