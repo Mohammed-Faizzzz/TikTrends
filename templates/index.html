@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TikTok Likes Predictor</title>
+</head>
+<body>
+    <h1>Predict TikTok Likes</h1>
+    <form id="predictForm">
+        <label for="hashtag">Hashtag:</label>
+        <input type="text" id="hashtag" name="hashtag"><br><br>
+        <label for="caption">Caption:</label>
+        <input type="text" id="caption" name="caption"><br><br>
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location"><br><br>
+        <input type="submit" value="Predict">
+    </form>
+    <h2 id="result"></h2>
+    <script>
+        document.getElementById('predictForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const hashtag = document.getElementById('hashtag').value;
+            const caption = document.getElementById('caption').value;
+            const location = document.getElementById('location').value;
+            
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ hashtag: hashtag, caption: caption, location: location })
+            });
+            
+            const result = await response.json();
+            document.getElementById('result').innerText = 'Predicted Likes: ' + result.predicted_likes;
+        });
+    </script>
+</body>
+</html>
