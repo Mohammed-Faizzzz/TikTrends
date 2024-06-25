@@ -1,20 +1,72 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>TikTok Likes Predictor</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        h1, h2 {
+            font-weight: 700;
+        }
+        label {
+            font-weight: 700;
+        }
+    </style>
 </head>
 <body>
-    <h1>Predict TikTok Likes</h1>
-    <form id="predictForm">
-        <label for="hashtag">Hashtag:</label>
-        <input type="text" id="hashtag" name="hashtag"><br><br>
-        <label for="caption">Caption:</label>
-        <input type="text" id="caption" name="caption"><br><br>
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location"><br><br>
-        <input type="submit" value="Predict">
-    </form>
-    <h2 id="result"></h2>
+    <div class="container">
+        <h1 class="text-center mb-2">Hype Meter</h1>
+        <h3 class="text-center mb-4 text-muted">Unleash the Power of Your Next Viral Post</h3>
+        <div class="card">
+            <div class="card-body">
+                <form id="predictForm">
+                    <div class="form-group">
+                        <label for="hashtag">Hashtag</label>
+                        <input type="text" class="form-control" id="hashtag" name="hashtag" placeholder="Enter hashtag">
+                    </div>
+                    <div class="form-group">
+                        <label for="caption">Caption</label>
+                        <input type="text" class="form-control" id="caption" name="caption" placeholder="Enter caption">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" class="form-control" id="location" name="location" placeholder="Enter location">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Predict</button>
+                </form>
+                <h2 class="text-center mt-4" id="result"></h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         document.getElementById('predictForm').addEventListener('submit', async function(e) {
             e.preventDefault();
